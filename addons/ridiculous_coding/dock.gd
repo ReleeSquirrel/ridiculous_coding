@@ -3,6 +3,7 @@ extends Control
 
 const BASE_XP: int = 50
 const STATS_FILE: String = "user://ridiculous_xp.ini"
+const ChecklistItem = preload("res://addons/ridiculous_coding/checklist_item.tscn")
 
 var explosions: bool = true
 var blips: bool = true
@@ -15,24 +16,27 @@ var xp_next: int = 2*BASE_XP
 var level: int = 1
 var stats: ConfigFile = ConfigFile.new()
 
-@onready var explosion_checkbox: CheckButton = $VBoxContainer/GridContainer/explosionCheckbox
-@onready var blip_checkbox: CheckButton = $VBoxContainer/GridContainer/blipCheckbox
-@onready var chars_checkbox: CheckButton = $VBoxContainer/GridContainer/charsCheckbox
-@onready var shake_checkbox: CheckButton = $VBoxContainer/GridContainer/shakeCheckbox
-@onready var sound_checkbox: CheckButton = $VBoxContainer/GridContainer/soundCheckbox
-@onready var fireworks_checkbox: CheckButton = $VBoxContainer/GridContainer/fireworksCheckbox
-@onready var progress: TextureProgressBar = $VBoxContainer/XP/ProgressBar
-@onready var sfx_fireworks: AudioStreamPlayer = $VBoxContainer/XP/ProgressBar/sfxFireworks
-@onready var fireworks_timer: Timer = $VBoxContainer/XP/ProgressBar/fireworksTimer
-@onready var fire_particles_one: GPUParticles2D = $VBoxContainer/XP/ProgressBar/fire1/GPUParticles2D
-@onready var fire_particles_two: GPUParticles2D = $VBoxContainer/XP/ProgressBar/fire2/GPUParticles2D
-@onready var xp_label: Label = $VBoxContainer/XP/HBoxContainer/xpLabel
-@onready var level_label: Label = $VBoxContainer/XP/HBoxContainer/levelLabel
-@onready var reset_button: Button = $VBoxContainer/CenterContainer/resetButton
+@onready var explosion_checkbox: CheckButton = $"TabContainer/RC Options/GridContainer/explosionCheckbox"
+@onready var blip_checkbox: CheckButton = $"TabContainer/RC Options/GridContainer/blipCheckbox"
+@onready var chars_checkbox: CheckButton = $"TabContainer/RC Options/GridContainer/charsCheckbox"
+@onready var shake_checkbox: CheckButton = $"TabContainer/RC Options/GridContainer/shakeCheckbox"
+@onready var sound_checkbox: CheckButton = $"TabContainer/RC Options/GridContainer/soundCheckbox"
+@onready var fireworks_checkbox: CheckButton = $"TabContainer/RC Options/GridContainer/fireworksCheckbox"
+@onready var progress: TextureProgressBar = $"TabContainer/Ridiculous Coding/XP/ProgressBar"
+@onready var sfx_fireworks: AudioStreamPlayer = $"TabContainer/Ridiculous Coding/XP/ProgressBar/sfxFireworks"
+@onready var fireworks_timer: Timer = $"TabContainer/Ridiculous Coding/XP/ProgressBar/fireworksTimer"
+@onready var fire_particles_one: GPUParticles2D = $"TabContainer/Ridiculous Coding/XP/ProgressBar/fire1/GPUParticles2D"
+@onready var fire_particles_two: GPUParticles2D = $"TabContainer/Ridiculous Coding/XP/ProgressBar/fire2/GPUParticles2D"
+@onready var xp_label: Label = $"TabContainer/Ridiculous Coding/XP/HBoxContainer/xpLabel"
+@onready var level_label: Label = $"TabContainer/Ridiculous Coding/XP/HBoxContainer/levelLabel"
+@onready var reset_button: Button = $"TabContainer/RC Options/CenterContainer/resetButton"
+@onready var goals_vbox_container: VBoxContainer = $"TabContainer/Ridiculous Coding/MarginContainer/Panel/ScrollContainer/GoalsVBoxContainer"
+@onready var add_goal_button: Button = $"TabContainer/Ridiculous Coding/AddGoalButton"
 
 
 func _ready():
 	reset_button.pressed.connect(on_reset_button_pressed)
+	add_goal_button.pressed.connect(on_add_goal_button_pressed)
 	
 	load_checkbox_state()
 	connect_checkboxes()
@@ -40,7 +44,6 @@ func _ready():
 	load_experience_progress()
 	update_progress()
 	stop_fireworks()
-
 
 func load_experience_progress():
 	if stats.load(STATS_FILE) == OK:
@@ -166,3 +169,9 @@ func on_reset_button_pressed():
 	progress.value = 0
 	progress.max_value = xp_next
 	update_progress()
+
+
+func on_add_goal_button_pressed():
+	# Instantiate a checklist item
+	var new_checklist_item = ChecklistItem.instantiate()
+	goals_vbox_container.add_child(new_checklist_item)
