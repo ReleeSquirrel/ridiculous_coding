@@ -1,6 +1,8 @@
 @tool
 extends Control
 
+signal check_box_toggled_on(position)
+
 const BASE_XP: int = 50
 const STATS_FILE: String = "user://ridiculous_xp.ini"
 const ChecklistItem = preload("res://addons/ridiculous_coding/checklist_item.tscn")
@@ -174,4 +176,9 @@ func on_reset_button_pressed():
 func on_add_goal_button_pressed():
 	# Instantiate a checklist item
 	var new_checklist_item = ChecklistItem.instantiate()
+	new_checklist_item.toggled_on.connect(_on_checklist_item_toggled_on)
 	goals_vbox_container.add_child(new_checklist_item)
+
+
+func _on_checklist_item_toggled_on(position):
+	check_box_toggled_on.emit(position)

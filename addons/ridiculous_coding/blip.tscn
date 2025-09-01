@@ -142,23 +142,23 @@ autoplay = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_8epm6")
+&"": SubResource("AnimationLibrary_8epm6")
 }
 autoplay = "default"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 50
-process_material = SubResource("ParticleProcessMaterial_5k50n")
 lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_5k50n")
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
 [node name="Label" type="Label" parent="."]
-modulate = Color(1.88557, 1.35563, 0.609976, 1)
+modulate = Color(0.691149, 1.93197, 1.54186, 1)
 texture_filter = 1
 offset_left = -35.0
 offset_top = -70.0

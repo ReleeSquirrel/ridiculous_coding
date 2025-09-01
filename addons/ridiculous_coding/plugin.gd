@@ -29,6 +29,7 @@ func _enter_tree():
 	# Add the main panel
 	dock = Dock.instantiate()
 	typing.connect(Callable(dock,"_on_typing"))
+	dock.check_box_toggled_on.connect(_on_dock_check_box_toggled_on)
 	add_control_to_dock(DOCK_SLOT_RIGHT_BL, dock)
 	
 
@@ -168,3 +169,17 @@ func text_changed(textedit : TextEdit):
 	
 	editors[textedit]["text"] = textedit.text
 	editors[textedit]["line"] = textedit.get_caret_line()
+
+
+func _on_dock_check_box_toggled_on(position):
+	if dock.explosions:
+		# Draw the thing
+		var thing = Boom.instantiate()
+		thing.destroy = true
+		thing.sound = dock.sound
+		dock.add_child(thing)
+		thing.global_position = position
+		
+		if dock.shake:
+			# Shake
+			shake_screen(0.2, 10)
