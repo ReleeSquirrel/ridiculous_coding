@@ -1,6 +1,6 @@
 # ridiculous_coding for Godot
 
-Written by John Watson
+Written by John Watson, Modified by ReleeSquirrel
 
 ## What does it do?
 
@@ -33,8 +33,3 @@ res://
 
 ![Enable plugin](readme-enable.png)
 
-## About me
-
-Hey, I'm John and I'm making a game in Godot called [Gravity Ace](https://gravityace.com).
-
-Come follow me on [Twitter](https://twitter.com/yafd) and [wishlist the game on Steam](https://store.steampowered.com/app/1003860/Gravity_Ace/) and [itch.io](https://jotson.itch.io/gravity)!
